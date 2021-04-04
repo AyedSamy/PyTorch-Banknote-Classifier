@@ -1,7 +1,7 @@
-#PyTorch-Banknote-Classifier
+# PyTorch-Banknote-Classifier
 
-This project is about the **classification** of **euro banknotes** using **PyTorch** and deep **convolutional neural networks**. All the banknotes images have been **web scraped** on **Google Image** and are structured in different folders, named by the banknote value (5€, 10€, 20€, 50€, 100€, 200€ and 500€).
+This project is about the **classification** of **euro banknotes** using **PyTorch** and deep **convolutional neural networks**. All the banknotes images have been **web scraped** on **Google Image** and are structured in different folders stored on Google Drive, named by the banknote value (5€, 10€, 20€, 50€, 100€, 200€ and 500€).
 
 A Custom Dataset class has been created to store the sets of banknotes in different data loaders, one dedicated to the training of the model, and another one dedicated to the testing of the model - without forgetting to store the corresponding labels for each image. The number of images is balanced between categories as we have around 150 images for each banknote value. 80% of the images have been used for training and 20% have been used for testing.
 
-Regarding the creation of the Dataset after the web scraping on Google Image, we had to detect if some of these images were corrupted to delete them before training the neural network. Indeed, when we first created the train and test dataloaders, a warning appeared which indicated us that one of the files was corrupted. As a result, this problem can be handled upstream by opening each of the images, checking their integrity.
+Regarding the creation of the Dataset and after the web scraping on Google Image, we had to detect if some of these images were corrupted to delete them before training the neural network. Indeed, when we first created the train and test dataloaders, a warning appeared which indicated us that one of the files was corrupted. As a result, we handled this problem upstream by opening each of the images, checking their integrity.
