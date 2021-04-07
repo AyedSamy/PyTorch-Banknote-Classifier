@@ -1,7 +1,8 @@
 import os
 from flask import Flask, render_template, request, flash, send_from_directory, redirect, url_for
-
 from werkzeug.utils import secure_filename
+from get_prediction import get_prediction
+from transform_image import transform_image
 
 UPLOAD_FOLDER = 'uploads\\images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -17,7 +18,19 @@ def allowed_file(filename):
 def home():
     return render_template('index.html')
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/predict/<filename>')
+def predict(filename):
+    #tensor = transform_image('5-euro-paper.jpg')
+    tensor = transform_image(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    if len(os.listdir(app.config['UPLOAD_FOLDER'])) > 0:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename)) # delete the uploaded image after transforming it into a tensor
+    if type(tensor) == str: # send the error message if the transformation couldn't be done
+        return "Error: " + tensor
+    else:
+        prediction, probabilities = get_prediction(tensor)
+        return str(prediction) + ' ' + str(probabilities.numpy())
+
+@app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -36,22 +49,14 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
+            #return redirect(url_for('uploaded_file', filename=filename))
+            return redirect(url_for('predict', filename=filename))
         
         return redirect(url_for("home"))
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-@app.route('/predict')
-def predict():
-    if request.method == 'GET':
-        default_name = 'John Doe'
-        name = request.args.get("filename", default_name)
-        return f'Hello from predict {name}'
-    else:
-        return 'Just hello no GET'
 
 if __name__ == '__main__':
     app.run(debug=True)
