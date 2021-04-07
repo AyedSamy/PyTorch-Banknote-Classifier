@@ -22,7 +22,7 @@ def home():
 def predict(filename):
     #tensor = transform_image('5-euro-paper.jpg')
     tensor = transform_image(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    if len(os.listdir(app.config['UPLOAD_FOLDER'])) > 0:
+    if os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename)) # delete the uploaded image after transforming it into a tensor
     if type(tensor) == str: # send the error message if the transformation couldn't be done
         return "Error: " + tensor
