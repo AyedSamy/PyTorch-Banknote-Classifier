@@ -1,4 +1,5 @@
 import os
+import numpy as np
 from flask import Flask, render_template, request, flash, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 from get_prediction import get_prediction
@@ -28,7 +29,9 @@ def predict(filename):
         return "Error: " + tensor
     else:
         prediction, probabilities = get_prediction(tensor)
-        return str(prediction) + ' ' + str(probabilities.numpy())
+        probabilities = [round(d,4) for d in probabilities.tolist()]
+        return render_template('prediction.html', prediction=str(prediction), probabilities=probabilities)
+        #return str(prediction) + ' ' + str(probabilities.numpy())
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
