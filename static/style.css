@@ -1,0 +1,77 @@
+body, html {
+    height: 100%;
+}
+
+body {
+    background-image: url("../static/euro-bg.jpg");
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+#title {
+    width: 500px;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-family: Lato, sans-serif;
+    font-size: 24px;
+} 
+form {
+    width: 500px;
+    margin: auto;
+    text-align: center;
+    font-family: 'Noto Serif JP', sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    background-color: white;
+    margin-bottom: 15px;
+}
+
+input#myFile {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#question {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#btn {
+    background: #f9f9f9;
+   	border: 2px solid #000000;
+    border-radius: 1000px;
+	margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 3px 18px;
+    color: #000000;
+    display: inline-block;
+   	font: bold 16px/1 'Tajawal', sans-serif;
+    text-align: center;
+}
+
+#btn:hover{
+    color: #3889e0;
+    border: 2px solid #3889e0;
+}
+
+#btn:active{
+    box-shadow: 0 0;
+}
+
+#container {
+    position: relative;
+    top: 10%;
+    border: 3px solid black;
+    width: 600px;
+    margin: auto;
+    background-color: white;
+    border-radius: 6px;
+}

@@ -2,13 +2,39 @@
 <html>
     <head>
         <title>Index</title>
+        <link type="text/css" rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
         <meta charset="utf-8">
+        <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&Noto+Serif+JP:wght@500&family=Old+Standard+TT:wght@700&family=Tajawal&display=swap" rel="stylesheet">
     </head>
 
     <body>
+
+        <div id="container">
+        <div id="title">💶 Banknote Classifier</div>
         <form action="/upload" method="POST" enctype="multipart/form-data">
+            
+            <label for="myFile">Choose a file</label>
             <input type="file" id="myFile" name="filename">
-            <input type="submit" value="Submit">
+            <span id="question">What is the banknote value ?</span>
+            <input type="radio" id="5" name="banknote" value="5">
+            <label for="5">5€</label>
+            <input type="radio" id="10" name="banknote" value="10">
+            <label for="10">10€</label>
+            <input type="radio" id="20" name="banknote" value="20">
+            <label for="20">20€</label>
+            <input type="radio" id="50" name="banknote" value="50">
+            <label for="50">50€</label><br>
+            <input type="radio" id="100" name="banknote" value="100">
+            <label for="100">100€</label>
+            <input type="radio" id="200" name="banknote" value="200">
+            <label for="200">200€</label>
+            <input type="radio" id="500" name="banknote" value="500">
+            <label for="500">500€</label><br>
+            <input type="radio" id="NA" name="banknote" value="NA">
+            <label for="NA">I don't know</label><br>
+            <input type="submit" value="Submit" id="btn">
         </form>
+    </div>
     </body>
 </html>
