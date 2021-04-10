@@ -4,22 +4,35 @@
         <title>Prediction</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Title</title>
+        <title>Prediction</title>
+        <link type="text/css" rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+        <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&Noto+Serif+JP:wght@500&family=Old+Standard+TT:wght@700&family=Tajawal&display=swap" rel="stylesheet">
         <!--Chart.js JS CDN--> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-        <style>
-            #chartFrame{
-                width: 700px;
-                height: 700px;
-            }
-        </style>
     </head>
 
     <body>
-        {{prediction}}
-        {{probabilities}}
-        <div id="chartFrame">
-            <canvas id="myChart" width="700" height="600"></canvas>
+        
+        <div id="predContainer">
+            <div id="title">Prediction of the model</div>
+            <div id="chartFrame">
+                <canvas id="myChart" width="525" height="450"></canvas>
+                <div id="predDetails">
+                    <br>
+                    <strong>Output array:</strong> {{probabilities}}
+                    <div style="margin-top: 10px; margin-bottom: 10px;"><strong>Prediction:</strong> {{prediction}}</div>
+                    <div style="margin-bottom: 10px;">The corresponding probabilities output by the model are represented above.</div>
+                    {% if correct=='NA' %}
+                        Real value of the provided bill: <span style='color: rgb(252, 136, 5); font-weight: 700;'>NA</span>
+                    {% elif correct==True %}
+                        The prediction given by the model is <span style='color: rgb(73, 143, 73); font-weight: 700;'>correct</span>!
+                    {% elif correct==False %}
+                        The prediction given by the model is <span style='color: #ff2626ec; font-weight: 700;'>wrong</span>.
+                        As a result, this image will be added to our database to help improving the accuracy of the network.
+                    {% endif %}
+                </div>
+            </div>
         </div>
         <script>
         var probas = {{probabilities}}; // Data from the neural network model sent by the server

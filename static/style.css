@@ -75,3 +75,28 @@ input#myFile {
     background-color: white;
     border-radius: 6px;
 }
+
+#predContainer {
+    position: relative;
+    top: 5%;
+    margin-bottom: 50px;
+    border: 3px solid black;
+    width: 900px;
+    height: 680px;
+    margin: auto;
+    background-color: white;
+    border-radius: 6px;
+}
+
+#chartFrame {
+    width: 525px;
+    height: 450px;
+    margin: auto;
+}
+
+
+
+#predDetails {
+    display: block;
+    text-align: center;
+}

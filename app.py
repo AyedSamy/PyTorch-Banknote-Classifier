@@ -12,6 +12,8 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "iuhto743yto34iuho287gh78"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+app.config['banknote_value'] = None
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -21,6 +23,7 @@ def home():
 
 @app.route('/predict/<filename>')
 def predict(filename):
+    labels = ['5€', '10€', '20€', '50€', '100€', '200€', '500€']
     #tensor = transform_image('5-euro-paper.jpg')
     tensor = transform_image(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     if os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
@@ -29,8 +32,15 @@ def predict(filename):
         return "Error: " + tensor
     else:
         prediction, probabilities = get_prediction(tensor)
+        prediction = labels[prediction]
         probabilities = [round(d,4) for d in probabilities.tolist()]
-        return render_template('prediction.html', prediction=str(prediction), probabilities=probabilities)
+        if app.config['banknote_value'] == 'NA':
+            correct = 'NA'
+        elif probabilities.index(max(probabilities)) == int(app.config['banknote_value']):
+            correct = True
+        else:
+            correct = False
+        return render_template('prediction.html', prediction=prediction, probabilities=probabilities, correct=correct)
         #return str(prediction) + ' ' + str(probabilities.numpy())
 
 @app.route('/upload', methods=['POST'])
@@ -41,6 +51,7 @@ def upload_file():
             print("No file part")
             return redirect(url_for("home"))
         file = request.files['filename']
+        app.config['banknote_value'] = request.form['banknote']
         
         # if user does not select file, browser also
         # submit an empty part without filename
